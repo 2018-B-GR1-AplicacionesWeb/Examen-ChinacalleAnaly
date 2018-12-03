@@ -1,8 +1,9 @@
-import {first, map} from "rxjs";
 
 var require;
 const fs = require('fs');
 const rxjs = require('rxjs');
+const first = require('rxjs/operators').first;
+const map = require('rxjs/operators').map;
 
 const nombreArchivo = 'people.json';
 /*
@@ -32,11 +33,13 @@ leerArchivoPromesa
             //"gender": "n/a",
             const contenido = JSON.parse(JSON.stringify(bd));
             let generos = [];
+
                     contenido.forEach(
 
                         (actual, indiceActual, arreglo)=> {
-                            generos.push( actual["gender"]);
-                            if(generos.indexOf(actual["gender"])!=null ){
+
+                            if(!generos.includes(actual["gender"]) ){
+                                generos.push( actual["gender"]);
                                 console.log(actual["gender"])
                             }
 
@@ -52,9 +55,13 @@ leerArchivoPromesa
             //## 2) Busque los tipos de "eye_color" en el arreglo `people.json`
             //"eye_color": "n/a",
             const contenido = JSON.parse(JSON.stringify(bd));
+            let ojos = [];
             contenido.forEach(
                 (actual, indiceActual, arreglo)=> {
-                    console.log(actual["eye_color"])
+                    if(!ojos.includes(actual["eye-color"])){
+                        ojos.push(actual["eye-color"]);
+                        console.log(actual["eye_color"])
+                    }
                 }
             )
         }
@@ -67,9 +74,14 @@ leerArchivoPromesa
             //Busque los tipos de "skin_color" en el arreglo `people.json`
             //"gender": "n/a",
             const contenido = JSON.parse(JSON.stringify(bd));
+            let piel =[];
             contenido.forEach(
                 (actual, indiceActual, arreglo)=> {
-                    console.log(actual["skin_color"])
+                    if(!piel.includes(actual["skin_color"])){
+                        piel.push(actual["skin_color"]);
+                        console.log(actual["skin_color"])
+                    }
+
                 }
             )
         }
@@ -81,16 +93,17 @@ leerArchivoPromesa
             //## Busque los tipos de "hair_color" en el arreglo `people.json`
             //"gender": "n/a",
             const contenido = JSON.parse(JSON.stringify(bd));
-            const base = rxjs.of(contenido);
-            base.pipe(
-                map(
-                    resul => {
-                        first(
-                            resul => resul["hair_color"]
-                        )
+            let cabello =[];
+            contenido.forEach(
+                (actual, indiceActual, arreglo)=> {
+                    if(!cabello.includes(actual["hair_color"])){
+                        cabello.push(actual["hair_color"]);
+                        console.log(actual["hair_color"])
                     }
-                )
+
+                }
             )
+
         }
 
     );
@@ -103,6 +116,8 @@ const arregloRespuesta =[
         b:false
     },
 ];
+
+//## 6) Cree un arreglo del abecedario, revisar si existe al menos un personaje con cada letra del abecedario.
 leerArchivoPromesa
     .then(
         (bd)=> {
